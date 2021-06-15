@@ -70,7 +70,7 @@ docker-compose up db
 Then import your dumped database:
 
 ```bash
-docker exec chevereto_db_1 mysql -uchevereto -pchevereto_database_password chevereto < chevereto.sql
+docker-compose exec db mysql -uchevereto -pchevereto_database_password chevereto < chevereto.sql
 ```
 
 Now you can start the app, and then copy `~/old/content` into `./assets`, and copy `~/old/images` into `./images`.
