@@ -36,7 +36,7 @@ docker-compose up -d
 You can use Nginx reverse proxy to serve your site, a sample config block as below:
 
 ```nginx
-server{
+server {
   listen 80;
   listen [::]:80;
   server_name example.com;
