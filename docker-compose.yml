@@ -1,0 +1,34 @@
+version: '3.7'
+services:
+
+  db:
+    restart: always
+    image: mariadb:focal
+    networks:
+      - internal_network
+    env_file:
+      - ./conf.env
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping --silent"]
+    volumes:
+      - ./db:/var/lib/mysql
+
+  app:
+    restart: always
+    image: chevereto/chevereto:3.20-httpd-php
+    ports:
+      - "8000:80"
+    networks:
+      - external_network
+      - internal_network
+    env_file:
+      - ./conf.env
+    volumes:
+      - ./app:/var/www/html/app
+      - ./assets:/var/www/html/public_assets
+      - ./images:/var/www/html/images
+
+networks:
+  external_network:
+  internal_network:
+    internal: true
