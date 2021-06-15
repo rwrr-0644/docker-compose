@@ -5,10 +5,15 @@ All sorts of docker-compose recipes for deploying Chevereto
 
 For now, just per-folder structure. ie:
 
-- /portainer
-- /unraid
-- /owner
-- /etc
+```
+.
+|-- app                 # Chevereto core code, ie, you can add theme here
+|-- assets              # public static assets, ie, users' avatars
+|-- conf.env            # application configs
+|-- db                  # the MySQL database
+|-- docker-compose.yml  # docker-compose config file
+`-- images              # uploaded images
+```
 
 # Httpd version `docker-compose` guide
 
@@ -53,3 +58,19 @@ server {
   }
 }
 ```
+
+# Migration from manual installation to Docker installation
+
+First creat an empty MySQL container, just run (don't run app now):
+
+```bash
+docker-compose up db
+```
+
+Then import your dumped database:
+
+```bash
+docker exec chevereto_db_1 mysql -uchevereto -pchevereto_database_password chevereto < chevereto.sql
+```
+
+Now you can start the app, and then copy `~/old/content` into `./assets`, and copy `~/old/images` into `./images`.
